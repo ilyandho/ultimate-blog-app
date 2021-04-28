@@ -89,17 +89,13 @@ let loginForm = document.querySelector(".login-form");
 let signUpForm = document.querySelector(".signup-form");
 
 const handleLoginForm = (e: any): any => {
-  e.preventDefault();
   (loginForm as HTMLElement).style.display = "block";
   (signUpForm as HTMLElement).style.display = "none";
-  console.log(loginForm, signUpForm);
 };
 
 const handleSignUpForm = (e: any): any => {
-  e.preventDefault();
   (loginForm as HTMLElement).style.display = "none";
   (signUpForm as HTMLElement).style.display = "block";
-  console.log(loginForm, signUpForm);
 };
 
 loginFormLink?.addEventListener("click", (e) => handleLoginForm(e));
@@ -138,10 +134,51 @@ const handleSignUp = async (e: any) => {
       username,
       password: password1,
     });
+    (loginForm as HTMLElement).style.display = "block";
+    (signUpForm as HTMLElement).style.display = "none";
   } catch (error) {
     (document.querySelector("#username") as HTMLElement).style.borderColor =
       "red";
     console.log("username taken");
   }
 };
+
+// Handle login
+const handleLogin = async (e: any) => {
+  e.preventDefault();
+
+  const username: string = e.target.userName.value;
+  const password: string = e.target.password.value;
+
+  console.log(password1 === password2);
+
+  // Check if the passwords match
+  if (password1 !== password2) {
+    console.log("password1", password1, "password2", password2);
+    (document.querySelector("#password1") as HTMLElement).style.borderColor =
+      "red";
+    (document.querySelector("#password2") as HTMLElement).style.borderColor =
+      "red";
+  }
+
+  console.log(firstname, lastname, username, password1, password2, uuid());
+
+  try {
+    const user = await createUser({
+      id: uuid(),
+      firstName: firstname,
+      lastName: lastname,
+      username,
+      password: password1,
+    });
+    (loginForm as HTMLElement).style.display = "block";
+    (signUpForm as HTMLElement).style.display = "none";
+  } catch (error) {
+    (document.querySelector("#username") as HTMLElement).style.borderColor =
+      "red";
+    console.log("username taken");
+  }
+};
+
 signUpForm?.addEventListener("submit", (e) => handleSignUp(e));
+loginForm?.addEventListener("submit", (e) => handleLogin(e));
