@@ -81,10 +81,14 @@ const userLogin = async (userObj: loginDetails) => {
     );
 
     const user = users.find((user) => {
-      user.username === userObj.username && user.password === userObj.password;
+      return (
+        user.username.trim() === userObj.username.trim() &&
+        user.password.trim() === userObj.password.trim()
+      );
     });
+
     if (!user) {
-      (document.querySelector("#userName") as HTMLElement).style.borderColor =
+      (document.querySelector("#username") as HTMLElement).style.borderColor =
         "red";
       (document.querySelector("#password") as HTMLElement).style.borderColor =
         "red";
@@ -94,7 +98,11 @@ const userLogin = async (userObj: loginDetails) => {
 
     await localStorage.setItem(
       "user",
-      JSON.stringify({ username: userObj.username, password: userObj.password })
+      JSON.stringify({
+        username: user.username,
+        firstname: user.firstName,
+        lastname: user.lastName,
+      })
     );
   } catch (error) {
     console.log(error);
@@ -169,11 +177,20 @@ const handleSignUp = async (e: any) => {
 const handleLogin = async (e: any) => {
   e.preventDefault();
 
-  const username: string = e.target.userName.value;
+  const username: string = e.target.username.value;
   const password: string = e.target.password.value;
 
   try {
-  } catch (error) {}
+    await userLogin({ username, password });
+
+    const formNode = document.querySelector(".form") as HTMLElement;
+
+    if (formNode.parentNode) {
+      formNode.parentNode.removeChild(formNode);
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 signUpForm?.addEventListener("submit", (e) => handleSignUp(e));

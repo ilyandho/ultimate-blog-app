@@ -61,16 +61,21 @@ const userLogin = (userObj) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const users = yield JSON.parse(localStorage.getItem("users") || "[]");
         const user = users.find((user) => {
-            user.username === userObj.username && user.password === userObj.password;
+            return (user.username.trim() === userObj.username.trim() &&
+                user.password.trim() === userObj.password.trim());
         });
         if (!user) {
-            document.querySelector("#userName").style.borderColor =
+            document.querySelector("#username").style.borderColor =
                 "red";
             document.querySelector("#password").style.borderColor =
                 "red";
             throw new Error("login details are not correct");
         }
-        yield localStorage.setItem("user", JSON.stringify({ username: userObj.username, password: userObj.password }));
+        yield localStorage.setItem("user", JSON.stringify({
+            username: user.username,
+            firstname: user.firstName,
+            lastname: user.lastName,
+        }));
     }
     catch (error) {
         console.log(error);
@@ -132,11 +137,18 @@ const handleSignUp = (e) => __awaiter(void 0, void 0, void 0, function* () {
 // Handle login
 const handleLogin = (e) => __awaiter(void 0, void 0, void 0, function* () {
     e.preventDefault();
-    const username = e.target.userName.value;
+    const username = e.target.username.value;
     const password = e.target.password.value;
     try {
+        yield userLogin({ username, password });
+        const formNode = document.querySelector(".form");
+        if (formNode.parentNode) {
+            formNode.parentNode.removeChild(formNode);
+        }
     }
-    catch (error) { }
+    catch (error) {
+        console.log(error);
+    }
 });
 signUpForm === null || signUpForm === void 0 ? void 0 : signUpForm.addEventListener("submit", (e) => handleSignUp(e));
 loginForm === null || loginForm === void 0 ? void 0 : loginForm.addEventListener("submit", (e) => handleLogin(e));
