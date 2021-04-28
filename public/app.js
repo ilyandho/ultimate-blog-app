@@ -8,15 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-let Ilyas = {
-    id: "dudf",
-    firstName: "ilau",
-    lastName: "jlS",
-    username: "URJERKJE",
-    password: "HDJFJKD",
-};
-console.log("/// calling uuid");
-console.log(Ilyas);
 // // //** Utils //
 // /* UUID generator //
 const uuid = () => {
@@ -34,6 +25,7 @@ const uuid = () => {
 };
 // UUID Generator */ //
 //  /* Data storage //
+// User creation
 const createUser = (userObj) => __awaiter(void 0, void 0, void 0, function* () {
     let usersArray = [];
     try {
@@ -64,9 +56,29 @@ const createUser = (userObj) => __awaiter(void 0, void 0, void 0, function* () {
         return "Theres was a problem saving user";
     }
 });
+// Login
+const userLogin = (userObj) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const users = yield JSON.parse(localStorage.getItem("users") || "[]");
+        const user = users.find((user) => {
+            user.username === userObj.username && user.password === userObj.password;
+        });
+        if (!user) {
+            document.querySelector("#userName").style.borderColor =
+                "red";
+            document.querySelector("#password").style.borderColor =
+                "red";
+            throw new Error("login details are not correct");
+        }
+        yield localStorage.setItem("user", JSON.stringify({ username: userObj.username, password: userObj.password }));
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
 // Data Storage */ //
 // Utils **// // //
-// Handle form change
+// Handle form redirect
 let loginFormLink = document.querySelector(".go-to-login");
 let signupFormLink = document.querySelector(".go-to-signup");
 let loginForm = document.querySelector(".login-form");
@@ -122,32 +134,9 @@ const handleLogin = (e) => __awaiter(void 0, void 0, void 0, function* () {
     e.preventDefault();
     const username = e.target.userName.value;
     const password = e.target.password.value;
-    console.log(password1 === password2);
-    // Check if the passwords match
-    if (password1 !== password2) {
-        console.log("password1", password1, "password2", password2);
-        document.querySelector("#password1").style.borderColor =
-            "red";
-        document.querySelector("#password2").style.borderColor =
-            "red";
-    }
-    console.log(firstname, lastname, username, password1, password2, uuid());
     try {
-        const user = yield createUser({
-            id: uuid(),
-            firstName: firstname,
-            lastName: lastname,
-            username,
-            password: password1,
-        });
-        loginForm.style.display = "block";
-        signUpForm.style.display = "none";
     }
-    catch (error) {
-        document.querySelector("#username").style.borderColor =
-            "red";
-        console.log("username taken");
-    }
+    catch (error) { }
 });
 signUpForm === null || signUpForm === void 0 ? void 0 : signUpForm.addEventListener("submit", (e) => handleSignUp(e));
 loginForm === null || loginForm === void 0 ? void 0 : loginForm.addEventListener("submit", (e) => handleLogin(e));
