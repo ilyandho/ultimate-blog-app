@@ -142,9 +142,7 @@ const handleLogin = (e) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield userLogin({ username, password });
         const formNode = document.querySelector(".form");
-        if (formNode.parentNode) {
-            formNode.parentNode.removeChild(formNode);
-        }
+        window.location.href = "./blogs";
     }
     catch (error) {
         console.log(error);

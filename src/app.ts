@@ -1,9 +1,9 @@
 interface USER {
-  id: String;
-  firstName: String;
-  lastName: String;
-  username: String;
-  password: String;
+  id: string;
+  firstName: string;
+  lastName: string;
+  username: string;
+  password: string;
 }
 interface loginDetails {
   username: string;
@@ -12,7 +12,7 @@ interface loginDetails {
 // // //** Utils //
 
 // /* UUID generator //
-const uuid = (): String => {
+const uuid = (): string => {
   console.log("uuid running ...");
   let s: any[] = [];
   let hexDigits: string = "0123456789abcdef";
@@ -185,9 +185,7 @@ const handleLogin = async (e: any) => {
 
     const formNode = document.querySelector(".form") as HTMLElement;
 
-    if (formNode.parentNode) {
-      formNode.parentNode.removeChild(formNode);
-    }
+    window.location.href = "./blogs";
   } catch (error) {
     console.log(error);
   }
