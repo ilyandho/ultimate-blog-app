@@ -17,9 +17,9 @@ let Ilyas: USER = {
 console.log("/// calling uuid");
 console.log(Ilyas);
 
-// Utils
+// // //** Utils //
 
-// UUID generator
+// /* UUID generator //
 const uuid = (): String => {
   console.log("uuid running ...");
   let s: any[] = [];
@@ -34,8 +34,53 @@ const uuid = (): String => {
   let uuid = s.join("");
   return uuid;
 };
+// UUID Generator */ //
 
-export default uuid;
+//  /* Data storage //
+const createUser = async (userObj: USER): Promise<string> => {
+  let usersArray: USER[] = [];
+
+  try {
+    const users: USER[] = await JSON.parse(
+      localStorage.getItem("users") || "[]"
+    );
+
+    if (users.length === 0) {
+      usersArray.push(userObj);
+    } else {
+      // Check if user exists
+      users.map((user) => {
+        if (user.username === userObj.username) {
+          (document.querySelector(
+            "#userName"
+          ) as HTMLElement).style.borderColor = "red";
+          (document.querySelector(
+            "#userName"
+          ) as HTMLElement).style.background = "#cc646482";
+          console.log("username taken");
+          throw new Error("User exists");
+        }
+      });
+
+      // Push user to userArray
+      usersArray = [...users, userObj];
+    }
+
+    // Save user
+    await localStorage.setItem("users", JSON.stringify(usersArray));
+
+    console.log(await JSON.parse(localStorage.getItem("users") || "[]"));
+
+    return "User created";
+  } catch (error) {
+    console.log(error);
+
+    return "Theres was a problem saving user";
+  }
+};
+// Data Storage */ //
+
+// Utils **// // //
 
 // Handle form change
 let loginFormLink = document.querySelector(".go-to-login");
@@ -62,14 +107,16 @@ signupFormLink?.addEventListener("click", (e) => handleSignUpForm(e));
 
 // handle SignUp
 
-const handleSignUp = (e: any) => {
+const handleSignUp = async (e: any) => {
   e.preventDefault();
 
   const firstname: string = e.target.firstName.value;
   const lastname: string = e.target.lastName.value;
   const username: string = e.target.userName.value;
-  let password1: string = e.target.password1.value;
+  const password1: string = e.target.password1.value;
   const password2: string = e.target.password2.value;
+  let password: string;
+
   console.log(password1 === password2);
 
   // Check if the passwords match
@@ -81,7 +128,20 @@ const handleSignUp = (e: any) => {
       "red";
   }
 
-  // console.log(e)
   console.log(firstname, lastname, username, password1, password2, uuid());
+
+  try {
+    const user = await createUser({
+      id: uuid(),
+      firstName: firstname,
+      lastName: lastname,
+      username,
+      password: password1,
+    });
+  } catch (error) {
+    (document.querySelector("#username") as HTMLElement).style.borderColor =
+      "red";
+    console.log("username taken");
+  }
 };
 signUpForm?.addEventListener("submit", (e) => handleSignUp(e));

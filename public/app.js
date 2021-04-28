@@ -1,3 +1,13 @@
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 let Ilyas = {
     id: "dudf",
     firstName: "ilau",
@@ -7,8 +17,8 @@ let Ilyas = {
 };
 console.log("/// calling uuid");
 console.log(Ilyas);
-// Utils
-// UUID generator
+// // //** Utils //
+// /* UUID generator //
 const uuid = () => {
     console.log("uuid running ...");
     let s = [];
@@ -22,7 +32,40 @@ const uuid = () => {
     let uuid = s.join("");
     return uuid;
 };
-export default uuid;
+// UUID Generator */ //
+//  /* Data storage //
+const createUser = (userObj) => __awaiter(void 0, void 0, void 0, function* () {
+    let usersArray = [];
+    try {
+        const users = yield JSON.parse(localStorage.getItem("users") || "[]");
+        if (users.length === 0) {
+            usersArray.push(userObj);
+        }
+        else {
+            // Check if user exists
+            users.map((user) => {
+                if (user.username === userObj.username) {
+                    document.querySelector("#userName").style.borderColor = "red";
+                    document.querySelector("#userName").style.background = "#cc646482";
+                    console.log("username taken");
+                    throw new Error("User exists");
+                }
+            });
+            // Push user to userArray
+            usersArray = [...users, userObj];
+        }
+        // Save user
+        yield localStorage.setItem("users", JSON.stringify(usersArray));
+        console.log(yield JSON.parse(localStorage.getItem("users") || "[]"));
+        return "User created";
+    }
+    catch (error) {
+        console.log(error);
+        return "Theres was a problem saving user";
+    }
+});
+// Data Storage */ //
+// Utils **// // //
 // Handle form change
 let loginFormLink = document.querySelector(".go-to-login");
 let signupFormLink = document.querySelector(".go-to-signup");
@@ -43,13 +86,14 @@ const handleSignUpForm = (e) => {
 loginFormLink === null || loginFormLink === void 0 ? void 0 : loginFormLink.addEventListener("click", (e) => handleLoginForm(e));
 signupFormLink === null || signupFormLink === void 0 ? void 0 : signupFormLink.addEventListener("click", (e) => handleSignUpForm(e));
 // handle SignUp
-const handleSignUp = (e) => {
+const handleSignUp = (e) => __awaiter(void 0, void 0, void 0, function* () {
     e.preventDefault();
     const firstname = e.target.firstName.value;
     const lastname = e.target.lastName.value;
     const username = e.target.userName.value;
-    let password1 = e.target.password1.value;
+    const password1 = e.target.password1.value;
     const password2 = e.target.password2.value;
+    let password;
     console.log(password1 === password2);
     // Check if the passwords match
     if (password1 !== password2) {
@@ -59,7 +103,20 @@ const handleSignUp = (e) => {
         document.querySelector("#password2").style.borderColor =
             "red";
     }
-    // console.log(e)
     console.log(firstname, lastname, username, password1, password2, uuid());
-};
+    try {
+        const user = yield createUser({
+            id: uuid(),
+            firstName: firstname,
+            lastName: lastname,
+            username,
+            password: password1,
+        });
+    }
+    catch (error) {
+        document.querySelector("#username").style.borderColor =
+            "red";
+        console.log("username taken");
+    }
+});
 signUpForm === null || signUpForm === void 0 ? void 0 : signUpForm.addEventListener("submit", (e) => handleSignUp(e));
