@@ -5,7 +5,7 @@
 - JSON files
   Store files in json documents i.e USERS.json and BLOGS.json
 - Typescript
-- HTML AND CSS (might use tailwind)
+<!-- - HTML AND CSS (might use tailwind) -->
 - Rich text editor
 - uuid generate
 
