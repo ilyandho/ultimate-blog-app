@@ -61,6 +61,7 @@ const userLogin = (userObj) => __awaiter(void 0, void 0, void 0, function* () {
             throw new Error("login details are not correct");
         }
         yield store("user", {
+            id: user.id,
             username: user.username,
             firstname: user.firstName,
             lastname: user.lastName,
@@ -71,4 +72,20 @@ const userLogin = (userObj) => __awaiter(void 0, void 0, void 0, function* () {
         console.log(error);
     }
 });
-export { createUser, userLogin, userLogout };
+const getUserDetails = () => {
+    let userExists = false;
+    if (retrieve("user").length !== 0) {
+        userExists = true;
+        const user = retrieve("user", "{}");
+        document.querySelector(".username").innerText =
+            user === null || user === void 0 ? void 0 : user.username;
+        document.querySelector(".fullname").innerText =
+            (user === null || user === void 0 ? void 0 : user.firstname) + " " + (user === null || user === void 0 ? void 0 : user.lastname);
+        document.querySelector(".logout").addEventListener("click", () => userLogout());
+        return userExists;
+    }
+    else {
+        return userExists;
+    }
+};
+export { createUser, userLogin, userLogout, getUserDetails };

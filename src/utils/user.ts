@@ -1,4 +1,4 @@
-import { USER, LOGINDETAILS } from "../models/user";
+import { USER, LOGINDETAILS, USERDETAILS } from "../models/user";
 import { retrieve, store } from "./storeToLocal.js";
 
 let loginForm = document.querySelector(".login-form");
@@ -71,6 +71,7 @@ const userLogin = async (userObj: LOGINDETAILS) => {
     }
 
     await store("user", {
+      id: user.id,
       username: user.username,
       firstname: user.firstName,
       lastname: user.lastName,
@@ -82,4 +83,25 @@ const userLogin = async (userObj: LOGINDETAILS) => {
   }
 };
 
-export { createUser, userLogin, userLogout };
+const getUserDetails = (): boolean => {
+  let userExists: boolean = false;
+  if (retrieve("user").length !== 0) {
+    userExists = true;
+    const user: USERDETAILS = retrieve("user", "{}");
+    (document.querySelector(".username") as HTMLElement).innerText =
+      user?.username;
+
+    (document.querySelector(".fullname") as HTMLElement).innerText =
+      user?.firstname + " " + user?.lastname;
+
+    (document.querySelector(".logout") as HTMLElement).addEventListener(
+      "click",
+      () => userLogout()
+    );
+
+    return userExists;
+  } else {
+    return userExists;
+  }
+};
+export { createUser, userLogin, userLogout, getUserDetails };

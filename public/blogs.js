@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import posts from "./data/posts.js";
 import { store, retrieve } from "./utils/storeToLocal.js";
-import { getUserDetails } from "./utils/userDetails.js";
+import { getUserDetails } from "./utils/user.js";
 // Get user details and fill them in at the top if logged in
 // Else redirect to signup page
 if (getUserDetails()) {
@@ -35,15 +35,15 @@ if (getUserDetails()) {
             const preview = (_a = localPosts[i]) === null || _a === void 0 ? void 0 : _a.body.substr(0, 100);
             const user = users.find((user) => user.id === localPosts[i].userId);
             postsElement += `
-        <div class="post" id="${posts[i].id}">
-          <h3>${posts[i].title}</h3>
+        <div class="post" id="${localPosts[i].id}">
+          <h3>${localPosts[i].title}</h3>
           <p>${preview}</p>
           <div class="user">
             <img src="../public/images/beach.jpg"></img>
 
             <p>${user === undefined ? "Anonymous" : (user === null || user === void 0 ? void 0 : user.username) + (user === null || user === void 0 ? void 0 : user.lastName)}</p>
 
-            <a id=${posts[i].id}>Read More</a>
+            <a id=${localPosts[i].id}>Read More</a>
           </div>
         </div>
       `;

@@ -4,7 +4,7 @@ import { store, retrieve } from "./utils/storeToLocal.js";
 
 import { USER } from "./models/user.js";
 import { POST } from "./models/post.js";
-import { getUserDetails } from "./utils/userDetails.js";
+import { getUserDetails } from "./utils/user.js";
 
 // Get user details and fill them in at the top if logged in
 // Else redirect to signup page
@@ -36,8 +36,8 @@ if (getUserDetails()) {
       );
 
       postsElement += `
-        <div class="post" id="${posts[i].id}">
-          <h3>${posts[i].title}</h3>
+        <div class="post" id="${localPosts[i].id}">
+          <h3>${localPosts[i].title}</h3>
           <p>${preview}</p>
           <div class="user">
             <img src="../public/images/beach.jpg"></img>
@@ -46,7 +46,7 @@ if (getUserDetails()) {
               user === undefined ? "Anonymous" : user?.username + user?.lastName
             }</p>
 
-            <a id=${posts[i].id}>Read More</a>
+            <a id=${localPosts[i].id}>Read More</a>
           </div>
         </div>
       `;
