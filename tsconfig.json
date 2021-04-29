@@ -5,6 +5,7 @@
     "allowJs": true,
     "outDir": "public",
     "rootDir": "src",
+    // "baseUrl": "./src",
     "strict": true,
     "noImplicitAny": true,
     "esModuleInterop": true

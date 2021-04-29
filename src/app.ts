@@ -1,32 +1,8 @@
-interface USER {
-  id: string;
-  firstName: string;
-  lastName: string;
-  username: string;
-  password: string;
-}
-interface loginDetails {
-  username: string;
-  password: string;
-}
-// // //** Utils //
+import uuid from "./utils/uuid.js";
+import { store, retrieve } from "./utils/storeToLocal";
 
-// /* UUID generator //
-const uuid = (): string => {
-  console.log("uuid running ...");
-  let s: any[] = [];
-  let hexDigits: string = "0123456789abcdef";
-  for (var i = 0; i < 36; i++) {
-    s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
-  }
-  s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
-  s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
-  s[8] = s[13] = s[18] = s[23] = "-";
-
-  let uuid = s.join("");
-  return uuid;
-};
-// UUID Generator */ //
+import USER from "./models/user";
+import LOGINDETAILS from "./models/loginDetails";
 
 //  /* Data storage //
 // User creation
@@ -74,7 +50,7 @@ const createUser = async (userObj: USER): Promise<string> => {
 
 // Login
 
-const userLogin = async (userObj: loginDetails) => {
+const userLogin = async (userObj: LOGINDETAILS) => {
   try {
     const users: USER[] = await JSON.parse(
       localStorage.getItem("users") || "[]"
