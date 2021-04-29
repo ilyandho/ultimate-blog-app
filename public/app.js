@@ -8,65 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import uuid from "./utils/uuid.js";
-//  /* Data storage //
-// User creation
-const createUser = (userObj) => __awaiter(void 0, void 0, void 0, function* () {
-    let usersArray = [];
-    try {
-        const users = yield JSON.parse(localStorage.getItem("users") || "[]");
-        if (users.length === 0) {
-            usersArray.push(userObj);
-        }
-        else {
-            // Check if user exists
-            users.map((user) => {
-                if (user.username === userObj.username) {
-                    document.querySelector("#userName").style.borderColor = "red";
-                    document.querySelector("#userName").style.background = "#cc646482";
-                    console.log("username taken");
-                    throw new Error("User exists");
-                }
-            });
-            // Push user to userArray
-            usersArray = [...users, userObj];
-        }
-        // Save user
-        yield localStorage.setItem("users", JSON.stringify(usersArray));
-        console.log(yield JSON.parse(localStorage.getItem("users") || "[]"));
-        return "User created";
-    }
-    catch (error) {
-        console.log(error);
-        return "Theres was a problem saving user";
-    }
-});
-// Login
-const userLogin = (userObj) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const users = yield JSON.parse(localStorage.getItem("users") || "[]");
-        const user = users.find((user) => {
-            return (user.username.trim() === userObj.username.trim() &&
-                user.password.trim() === userObj.password.trim());
-        });
-        if (!user) {
-            document.querySelector("#username").style.borderColor =
-                "red";
-            document.querySelector("#password").style.borderColor =
-                "red";
-            throw new Error("login details are not correct");
-        }
-        yield localStorage.setItem("user", JSON.stringify({
-            username: user.username,
-            firstname: user.firstName,
-            lastname: user.lastName,
-        }));
-    }
-    catch (error) {
-        console.log(error);
-    }
-});
-// Data Storage */ //
-// Utils **// // //
+import { createUser, userLogin } from "./utils/user.js";
 // Handle form redirect
 let loginFormLink = document.querySelector(".go-to-login");
 let signupFormLink = document.querySelector(".go-to-signup");
@@ -90,17 +32,13 @@ const handleSignUp = (e) => __awaiter(void 0, void 0, void 0, function* () {
     const username = e.target.userName.value;
     const password1 = e.target.password1.value;
     const password2 = e.target.password2.value;
-    let password;
-    console.log(password1 === password2);
     // Check if the passwords match
     if (password1 !== password2) {
-        console.log("password1", password1, "password2", password2);
         document.querySelector("#password1").style.borderColor =
             "red";
         document.querySelector("#password2").style.borderColor =
             "red";
     }
-    console.log(firstname, lastname, username, password1, password2, uuid());
     try {
         const user = yield createUser({
             id: uuid(),
