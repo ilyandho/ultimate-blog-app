@@ -6,7 +6,7 @@ import { USER, USERDETAILS } from "../models/user";
 export const getUserDetails = (): boolean => {
   console.log("gettting user details");
   let userExists: boolean = false;
-  if (retrieve("user")) {
+  if (retrieve("user").length !== 0) {
     userExists = true;
     const user: USERDETAILS = retrieve("user", "{}");
     (document.querySelector(".username") as HTMLElement).innerText =
