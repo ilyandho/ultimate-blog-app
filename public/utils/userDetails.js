@@ -3,7 +3,7 @@ import { userLogout } from "./user.js";
 export const getUserDetails = () => {
     console.log("gettting user details");
     let userExists = false;
-    if (retrieve("user")) {
+    if (retrieve("user").length !== 0) {
         userExists = true;
         const user = retrieve("user", "{}");
         document.querySelector(".username").innerText =
