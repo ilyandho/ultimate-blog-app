@@ -1,3 +1,5 @@
-import uuid from "./utils/uuid.js";
-console.log("uuid", uuid());
-// console.log(JSON.parse(data));
+import { getUserDetails } from "./utils/userDetails.js";
+if (getUserDetails()) {
+}
+else
+    window.location.href = "../";

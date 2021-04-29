@@ -1,6 +1,4 @@
-import uuid from "./utils/uuid.js";
-import posts from "./data/posts.js";
+import { getUserDetails } from "./utils/userDetails.js";
 
-console.log("uuid", uuid());
-
-// console.log(JSON.parse(data));
+if (getUserDetails()) {
+} else window.location.href = "../";

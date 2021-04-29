@@ -47,8 +47,6 @@ const handleSignUp = (e) => __awaiter(void 0, void 0, void 0, function* () {
             username,
             password: password1,
         });
-        loginForm.style.display = "block";
-        signUpForm.style.display = "none";
     }
     catch (error) {
         document.querySelector("#username").style.borderColor =
@@ -64,7 +62,6 @@ const handleLogin = (e) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield userLogin({ username, password });
         const formNode = document.querySelector(".form");
-        window.location.href = "./blogs";
     }
     catch (error) {
         console.log(error);

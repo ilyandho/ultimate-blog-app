@@ -85,6 +85,7 @@ h1 {
   line-height: 2em;
   font-weight: 300;
   position: relative;
+  color: #353535ff;
 }
 .link-page::after {
   content: "";

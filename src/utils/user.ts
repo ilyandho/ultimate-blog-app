@@ -1,6 +1,9 @@
 import { USER, LOGINDETAILS } from "../models/user";
 import { retrieve, store } from "./storeToLocal.js";
 
+let loginForm = document.querySelector(".login-form");
+let signUpForm = document.querySelector(".signup-form");
+
 // User creation
 const createUser = async (userObj: USER): Promise<string> => {
   let usersArray: USER[] = [];
@@ -31,13 +34,20 @@ const createUser = async (userObj: USER): Promise<string> => {
 
     // Save user
     await store("users", usersArray);
-
+    (loginForm as HTMLElement).style.display = "block";
+    (signUpForm as HTMLElement).style.display = "none";
     return "User created";
   } catch (error) {
     console.log(error);
 
     return "Theres was a problem saving user";
   }
+};
+
+const userLogout = () => {
+  localStorage.removeItem("user");
+
+  window.location.href = "../";
 };
 
 const userLogin = async (userObj: LOGINDETAILS) => {
@@ -65,9 +75,11 @@ const userLogin = async (userObj: LOGINDETAILS) => {
       firstname: user.firstName,
       lastname: user.lastName,
     });
+
+    window.location.href = "./blogs";
   } catch (error) {
     console.log(error);
   }
 };
 
-export { createUser, userLogin };
+export { createUser, userLogin, userLogout };

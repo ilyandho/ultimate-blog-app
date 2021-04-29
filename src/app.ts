@@ -47,8 +47,6 @@ const handleSignUp = async (e: any) => {
       username,
       password: password1,
     });
-    (loginForm as HTMLElement).style.display = "block";
-    (signUpForm as HTMLElement).style.display = "none";
   } catch (error) {
     (document.querySelector("#username") as HTMLElement).style.borderColor =
       "red";
@@ -67,8 +65,6 @@ const handleLogin = async (e: any) => {
     await userLogin({ username, password });
 
     const formNode = document.querySelector(".form") as HTMLElement;
-
-    window.location.href = "./blogs";
   } catch (error) {
     console.log(error);
   }

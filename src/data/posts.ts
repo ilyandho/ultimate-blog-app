@@ -1,4 +1,4 @@
-import POST from "../models/post";
+import { POST } from "../models/post";
 
 const posts: POST[] = [
   {

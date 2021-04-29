@@ -8,6 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { retrieve, store } from "./storeToLocal.js";
+let loginForm = document.querySelector(".login-form");
+let signUpForm = document.querySelector(".signup-form");
 // User creation
 const createUser = (userObj) => __awaiter(void 0, void 0, void 0, function* () {
     let usersArray = [];
@@ -31,6 +33,8 @@ const createUser = (userObj) => __awaiter(void 0, void 0, void 0, function* () {
         }
         // Save user
         yield store("users", usersArray);
+        loginForm.style.display = "block";
+        signUpForm.style.display = "none";
         return "User created";
     }
     catch (error) {
@@ -38,6 +42,10 @@ const createUser = (userObj) => __awaiter(void 0, void 0, void 0, function* () {
         return "Theres was a problem saving user";
     }
 });
+const userLogout = () => {
+    localStorage.removeItem("user");
+    window.location.href = "../";
+};
 const userLogin = (userObj) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const users = yield retrieve("users");
@@ -57,9 +65,10 @@ const userLogin = (userObj) => __awaiter(void 0, void 0, void 0, function* () {
             firstname: user.firstName,
             lastname: user.lastName,
         });
+        window.location.href = "./blogs";
     }
     catch (error) {
         console.log(error);
     }
 });
-export { createUser, userLogin };
+export { createUser, userLogin, userLogout };
