@@ -13,8 +13,10 @@ import { getUserloggedIn } from "./utils/user.js";
 import uuid from "./utils/uuid.js";
 if (getUserloggedIn()) {
     // Check if there is any article
-    const article = retrieve("currentPost");
-    console.log(article);
+    let article = retrieve("currentPost");
+    if (article.length === 0)
+        article = "";
+    console.log("....", article);
     const titleInput = document.querySelector("#title");
     const contentInput = document.querySelector("#content");
     if (article) {
