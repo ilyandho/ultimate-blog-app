@@ -72,6 +72,10 @@ const userLogin = (userObj) => __awaiter(void 0, void 0, void 0, function* () {
         console.log(error);
     }
 });
+const getUserloggedInDetails = () => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield retrieve("user");
+    return user;
+});
 const getUserloggedIn = () => {
     let userExists = false;
     if (retrieve("user").length !== 0) {
@@ -93,4 +97,4 @@ const getUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const userDetails = yield users.find((user) => user.id === id);
     return userDetails;
 });
-export { createUser, userLogin, userLogout, getUserloggedIn, getUser };
+export { createUser, userLogin, userLogout, getUserloggedIn, getUserloggedInDetails, getUser, };
