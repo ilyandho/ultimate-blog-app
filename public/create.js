@@ -8,9 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { createPost } from "./utils/post.js";
-import { getUserDetails } from "./utils/user.js";
+import { getUserloggedIn } from "./utils/user.js";
 import uuid from "./utils/uuid.js";
-if (getUserDetails()) {
+if (getUserloggedIn()) {
     const articleForm = document.querySelector(".article");
     const handleSubmit = (e) => __awaiter(void 0, void 0, void 0, function* () {
         e.preventDefault();
@@ -22,9 +22,8 @@ if (getUserDetails()) {
             body: contents,
             id: uuid(),
         };
-        console.log(rawPost);
-        yield createPost(rawPost);
-        location.href = "../blogs";
+        const newPost = yield createPost(rawPost);
+        location.href = "../blogs?id=" + newPost.id;
     });
     articleForm === null || articleForm === void 0 ? void 0 : articleForm.addEventListener("submit", (e) => handleSubmit(e));
 }

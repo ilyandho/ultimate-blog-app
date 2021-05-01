@@ -83,7 +83,7 @@ const userLogin = async (userObj: LOGINDETAILS) => {
   }
 };
 
-const getUserDetails = (): boolean => {
+const getUserloggedIn = (): boolean => {
   let userExists: boolean = false;
   if (retrieve("user").length !== 0) {
     userExists = true;
@@ -104,4 +104,11 @@ const getUserDetails = (): boolean => {
     return userExists;
   }
 };
-export { createUser, userLogin, userLogout, getUserDetails };
+
+const getUser = async (id: string): Promise<USER> => {
+  const users = await retrieve("users");
+  const userDetails = await users.find((user: USER) => user.id === id);
+  return userDetails;
+};
+
+export { createUser, userLogin, userLogout, getUserloggedIn, getUser };

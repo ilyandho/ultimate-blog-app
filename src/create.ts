@@ -1,9 +1,9 @@
 import { POST } from "./models/post.js";
 import { createPost } from "./utils/post.js";
-import { getUserDetails } from "./utils/user.js";
+import { getUserloggedIn } from "./utils/user.js";
 import uuid from "./utils/uuid.js";
 
-if (getUserDetails()) {
+if (getUserloggedIn()) {
   const articleForm = document.querySelector(".article");
 
   const handleSubmit = async (e: any) => {
@@ -19,11 +19,9 @@ if (getUserDetails()) {
       id: uuid(),
     };
 
-    console.log(rawPost);
+    const newPost: POST = await createPost(rawPost);
 
-    await createPost(rawPost);
-
-    location.href = "../blogs";
+    location.href = "../blogs?id=" + newPost.id;
   };
 
   articleForm?.addEventListener("submit", (e) => handleSubmit(e));

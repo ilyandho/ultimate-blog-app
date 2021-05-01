@@ -15,5 +15,11 @@ const createPost = (postObj) => __awaiter(void 0, void 0, void 0, function* () {
     let newPosts = [];
     (postObj.userId = user.id), (newPosts = [postObj, ...posts]);
     yield store("posts", newPosts);
+    return postObj;
 });
-export { createPost };
+const getPost = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const posts = yield retrieve("posts");
+    const postDetails = yield posts.find((post) => post.id === id);
+    return postDetails;
+});
+export { createPost, getPost };

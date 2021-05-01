@@ -4,12 +4,18 @@ import { store, retrieve } from "./utils/storeToLocal.js";
 
 import { USER } from "./models/user.js";
 import { POST } from "./models/post.js";
-import { getUserDetails } from "./utils/user.js";
+import { getUserloggedIn } from "./utils/user.js";
 
 // Get user details and fill them in at the top if logged in
 // Else redirect to signup page
-if (getUserDetails()) {
+if (getUserloggedIn()) {
   window.addEventListener("load", async () => {
+    const handlePost = async (id: any) => {
+      await store("currentPost", id);
+
+      location.href = "../post";
+    };
+
     // Check if user is logged in
     const users: USER[] = await retrieve("users");
     // // Store the posts
@@ -43,18 +49,25 @@ if (getUserDetails()) {
             <img src="../public/images/beach.jpg"></img>
 
             <p>${
-              user === undefined ? "Anonymous" : user?.username + user?.lastName
+              user === undefined
+                ? "Anonymous"
+                : user?.firstName + " " + user?.lastName
             }</p>
 
-            <a id=${localPosts[i].id}>Read More</a>
+            <a class="go-to-post" id=${localPosts[i].id} " >
+            Read More
+            </a>
           </div>
         </div>
       `;
     }
 
     (document.querySelector(".blogs") as HTMLElement).innerHTML += postsElement;
-    document.querySelectorAll(".post").forEach((post) => {
-      post.setAttribute("href", "somelink.php?id" + post.id);
+    document.querySelectorAll(".go-to-post").forEach((post) => {
+      // post.setAttribute("href", "../post?" + post.id);
+      // console.log(post.id);
+
+      post.addEventListener("click", () => handlePost(post.id));
     });
   });
 } else window.location.href = "../";
