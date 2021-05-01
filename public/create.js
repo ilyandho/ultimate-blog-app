@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { createPost } from "./utils/post.js";
+import { store } from "./utils/storeToLocal.js";
 import { getUserloggedIn } from "./utils/user.js";
 import uuid from "./utils/uuid.js";
 if (getUserloggedIn()) {
@@ -16,14 +17,14 @@ if (getUserloggedIn()) {
         e.preventDefault();
         const title = e.target.title.value;
         const contents = e.target.content.value;
-        console.log(title, contents);
         let rawPost = {
             title,
             body: contents,
             id: uuid(),
         };
         const newPost = yield createPost(rawPost);
-        location.href = "../blogs?id=" + newPost.id;
+        yield store("currentPost", newPost.id);
+        location.href = "../post";
     });
     articleForm === null || articleForm === void 0 ? void 0 : articleForm.addEventListener("submit", (e) => handleSubmit(e));
 }
