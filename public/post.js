@@ -11,6 +11,12 @@ import { retrieve, store } from "./utils/storeToLocal.js";
 import { getPost } from "./utils/post.js";
 import { getUser, getUserloggedIn, getUserloggedInDetails, } from "./utils/user.js";
 if (getUserloggedIn()) {
+    const handleComment = (e) => {
+        var _a;
+        e.preventDefault();
+        const value = (_a = document.querySelector("textarea")) === null || _a === void 0 ? void 0 : _a.value;
+    };
+    document.querySelector(".new-comment").addEventListener("submit", (e) => handleComment(e));
     // Get post id
     const id = retrieve("currentPost");
     // localStorage.removeItem("currentPost");
