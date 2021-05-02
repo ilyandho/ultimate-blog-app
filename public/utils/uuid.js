@@ -1,6 +1,5 @@
 // /* UUID generator //
 const uuid = () => {
-    console.log("uuid4 running ...");
     let s = [];
     let hexDigits = "0123456789abcdef";
     for (var i = 0; i < 36; i++) {

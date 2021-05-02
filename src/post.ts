@@ -20,8 +20,6 @@ if (getUserloggedIn()) {
   // Get post id
   const id = retrieve("currentPost");
 
-  // localStorage.removeItem("currentPost");
-
   window.addEventListener("load", async () => {
     const postDetails: POST = await getPost(id);
     const userDetails: USER = await getUser(postDetails.userId);
@@ -86,7 +84,6 @@ if (getUserloggedIn()) {
 
     if (postId === userId) {
       const filtered = await posts.filter((post: POST) => post.id !== postId);
-      console.log(filtered);
 
       await store("posts", filtered);
 

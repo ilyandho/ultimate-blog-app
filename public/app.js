@@ -15,6 +15,7 @@ let loginFormLink = document.querySelector(".go-to-login");
 let signupFormLink = document.querySelector(".go-to-signup");
 let loginForm = document.querySelector(".login-form");
 let signUpForm = document.querySelector(".signup-form");
+localStorage.removeItem("currentPost");
 if (retrieve("user").length !== 0) {
     location.href = "../blogs";
 }
