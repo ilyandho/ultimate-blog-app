@@ -19,7 +19,6 @@ if (getUserloggedIn()) {
     document.querySelector(".new-comment").addEventListener("submit", (e) => handleComment(e));
     // Get post id
     const id = retrieve("currentPost");
-    // localStorage.removeItem("currentPost");
     window.addEventListener("load", () => __awaiter(void 0, void 0, void 0, function* () {
         const postDetails = yield getPost(id);
         const userDetails = yield getUser(postDetails.userId);
@@ -62,7 +61,6 @@ if (getUserloggedIn()) {
         const posts = yield retrieve("posts");
         if (postId === userId) {
             const filtered = yield posts.filter((post) => post.id !== postId);
-            console.log(filtered);
             yield store("posts", filtered);
             localStorage.removeItem("currentPost");
             location.href = "../blogs";

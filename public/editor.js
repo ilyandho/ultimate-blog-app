@@ -16,7 +16,6 @@ if (getUserloggedIn()) {
     let article = retrieve("currentPost");
     if (article.length === 0)
         article = "";
-    console.log("....", article);
     const titleInput = document.querySelector("#title");
     const contentInput = document.querySelector("#content");
     if (article) {
