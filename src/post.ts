@@ -9,6 +9,14 @@ import {
 } from "./utils/user.js";
 
 if (getUserloggedIn()) {
+  const handleComment = (e: any) => {
+    e.preventDefault();
+    const value = document.querySelector("textarea")?.value;
+  };
+
+  (document.querySelector(
+    ".new-comment"
+  ) as HTMLElement).addEventListener("submit", (e) => handleComment(e));
   // Get post id
   const id = retrieve("currentPost");
 

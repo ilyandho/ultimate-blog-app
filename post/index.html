@@ -21,11 +21,29 @@
             <a href="../" class="logout">Logout</a>
           </div>
           <a class="link-page" href="../blogs/">Articles </a>
-          <a class="link-page" href="../editor/">Create </a>
+          <a class="link-page" href="../editor/">Edit </a>
         </div>
       </div>
 
       <section id="post-details"></section>
+
+      <section class="comments">
+        <hr />
+        <em>Leave a comment</em>
+
+        <div class="inputs">
+          <form class="new-comment">
+            <textarea
+              type="text"
+              name="comment"
+              id="comment"
+              rows="3"
+            ></textarea>
+            <button type="submit">Comment</button>
+          </form>
+        </div>
+        <div class="list"><p>No comments</p></div>
+      </section>
     </main>
     <script type="module" src="../public/post.js"></script>
   </body>

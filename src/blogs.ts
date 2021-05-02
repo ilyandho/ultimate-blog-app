@@ -8,6 +8,7 @@ import { getUserloggedIn } from "./utils/user.js";
 
 // Get user details and fill them in at the top if logged in
 // Else redirect to signup page
+localStorage.removeItem("currentPost");
 if (getUserloggedIn()) {
   window.addEventListener("load", async () => {
     const handlePost = async (id: any) => {

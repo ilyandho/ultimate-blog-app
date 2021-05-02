@@ -44,3 +44,46 @@
 #post-details .author-details .actions .delete {
   background: red;
 }
+
+hr {
+  width: 60%;
+  margin: 1em 0;
+}
+.comments {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.comments > em {
+  padding: 0 1em 0.5em;
+}
+
+.list {
+  padding: 0 1em 0.5em;
+}
+
+.inputs {
+  width: 100%;
+  padding: 0 1em 0.5em;
+}
+
+.inputs form {
+  display: flex;
+  flex-direction: column;
+}
+.inputs textarea {
+  margin-bottom: 0.5em;
+  width: 100%;
+  padding: 0.5em;
+}
+
+.inputs button {
+  align-self: flex-end;
+  height: 2.5em;
+  width: 6em;
+  background: #3c6e71ff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

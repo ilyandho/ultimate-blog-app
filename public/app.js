@@ -9,11 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import uuid from "./utils/uuid.js";
 import { createUser, userLogin } from "./utils/user.js";
+import { retrieve } from "./utils/storeToLocal.js";
 // Handle form redirect
 let loginFormLink = document.querySelector(".go-to-login");
 let signupFormLink = document.querySelector(".go-to-signup");
 let loginForm = document.querySelector(".login-form");
 let signUpForm = document.querySelector(".signup-form");
+if (retrieve("user").length !== 0) {
+    location.href = "../blogs";
+}
 const handleLoginForm = (e) => {
     loginForm.style.display = "block";
     signUpForm.style.display = "none";

@@ -12,6 +12,7 @@ import { store, retrieve } from "./utils/storeToLocal.js";
 import { getUserloggedIn } from "./utils/user.js";
 // Get user details and fill them in at the top if logged in
 // Else redirect to signup page
+localStorage.removeItem("currentPost");
 if (getUserloggedIn()) {
     window.addEventListener("load", () => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
